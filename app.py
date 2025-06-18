@@ -83,7 +83,7 @@ if submitted:
 # Visualisasi
 st.header("📊 Visualisasi Data Mahasiswa")
 try:
-    df = pd.read_csv("data (2).csv", sep=';')
+    df = pd.read_csv("data.csv", sep=';')
 
     # Buat kolom tambahan jika belum ada
     if 'avg_sem_grade' not in df.columns:
