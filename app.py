@@ -77,8 +77,23 @@ if submitted:
     input_df = pd.DataFrame(input_dict)
     prediction = model.predict(input_df)[0]
 
+    # Mapping angka ke label status
+    status_map = {
+        0: "Dropout",
+        1: "Enrolled",
+        2: "Graduate"
+    }
+
+# Cek apakah prediksi angka atau string
+    if isinstance(prediction, (int, float)):
+        prediction_label = status_map.get(prediction, f"Label tidak dikenali: {prediction}")
+    else:
+        prediction_label = prediction
+
     st.subheader("🧠 Hasil Prediksi:")
-    st.success(f"Status Mahasiswa: **{prediction}**")
+    st.success(f"Status Mahasiswa: **{prediction_label}**")
+    st.write(f"Tipe prediksi: {type(prediction)} - Nilai: {prediction}")
+
 
 # Visualisasi
 st.header("📊 Visualisasi Data Mahasiswa")
