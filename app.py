@@ -7,7 +7,7 @@ import seaborn as sns
 st.set_page_config(page_title="Prediksi Dropout Mahasiswa", layout="wide")
 
 # Load model
-model = joblib.load("best_model (1).joblib")
+model = joblib.load("best_model.joblib")
 
 st.title("🎓 Prediksi Risiko Dropout Mahasiswa")
 
