@@ -77,33 +77,30 @@ if submitted:
     input_df = pd.DataFrame(input_dict)
     prediction = model.predict(input_df)[0]
 
-    # Mapping angka ke label status
+    # Mapping hasil angka ke label status
     status_map = {
         0: "Dropout",
         1: "Enrolled",
         2: "Graduate"
     }
+    prediction_label = status_map.get(int(prediction), "Tidak dikenali")
 
-# Cek apakah prediksi angka atau string
-    if isinstance(prediction, (int, float)):
-        prediction_label = status_map.get(prediction, f"Label tidak dikenali: {prediction}")
-    else:
-        prediction_label = prediction
-
+    # Tampilkan hasil dengan warna sesuai status
     st.subheader("🧠 Hasil Prediksi:")
-    st.success(f"Status Mahasiswa: **{prediction_label}**")
-    st.write(f"Tipe prediksi: {type(prediction)} - Nilai: {prediction}")
-
+    if prediction_label == "Dropout":
+        st.error(f"Status Mahasiswa: ❌ **{prediction_label}**")
+    elif prediction_label == "Graduate":
+        st.success(f"Status Mahasiswa: 🎓 **{prediction_label}**")
+    else:
+        st.info(f"Status Mahasiswa: ℹ️ **{prediction_label}**")
 
 # Visualisasi
 st.header("📊 Visualisasi Data Mahasiswa")
 try:
     df = pd.read_csv("data.csv", sep=';')
 
-    # Buat kolom tambahan jika belum ada
     if 'avg_sem_grade' not in df.columns:
         df['avg_sem_grade'] = (df['Curricular_units_1st_sem_grade'] + df['Curricular_units_2nd_sem_grade']) / 2
-
     if 'total_units_approved' not in df.columns:
         df['total_units_approved'] = df['Curricular_units_1st_sem_approved'] + df['Curricular_units_2nd_sem_approved']
 
